@@ -15,6 +15,10 @@ permissions, disabled checkout credential persistence, and timeouts. Required
 checks have no path filters, so documentation-only pull requests can complete.
 [Dependabot](../.github/dependabot.yml) proposes weekly Python and Actions updates.
 
+[Scorecard](../.github/workflows/scorecard.yml) checks repository security settings
+on main and weekly, and publishes its results for this public project. Its job
+alone has permissions to upload security results and obtain a publishing identity.
+
 ## GitHub configuration
 
 Keep default workflow tokens read-only, require full-SHA action pins, and disallow
@@ -22,31 +26,29 @@ Actions from approving pull requests. Enable issues, disable the unused wiki, al
 disable rebase merging, and delete merged branches automatically. Merge commits
 preserve reviewed atomic commits; squash is useful for noisy contributor branches.
 The [code owner](../.github/CODEOWNERS) reviews external contributions.
+Workflows from all outside contributors require maintainer approval.
 
 The [main ruleset](../.github/main-ruleset.json) prevents deletion and force pushes,
 requires a reviewed pull request and successful Python/zizmor checks, and requires
 review threads to be resolved. Repository administrators can bypass through a
 pull request for solo maintenance; check CI before using that bypass.
 
-GitHub currently does not allow rulesets for this private repository on the
-account's plan. Keeping the file here does **not** enforce protection. Once the
-repository is public (or its plan supports private rulesets), apply it once:
+The repository is public. The ruleset is active as
+[Protect main](https://github.com/b-luu/ontolog/rules/25734352). To update the live
+rule from the versioned configuration:
 
 ```sh
-gh api --method POST repos/b-luu/ontolog/rulesets --input .github/main-ruleset.json
+gh api --method PUT repos/b-luu/ontolog/rulesets/25734352 --input .github/main-ruleset.json
 ```
 
-Inspect existing rulesets before running that command again; update the existing
-rule rather than creating duplicates. Verify the required check names against an
-actual successful run. Changing repository visibility is a separate owner action.
+Verify required check names against an actual successful run before changing them.
+The file alone does not enforce protection; verify the live rule after updating it.
 
-Dependabot alerts and automated security fixes are enabled while private.
-After making the repository public, enable GitHub CodeQL default setup for Python
-and Actions, private vulnerability reporting, and secret scanning/push protection
-where available. Verify each feature's status;
-none is implied by committing workflow files. CodeQL and public Scorecard reporting
-are deferred while private rather than requiring unavailable security features or
-publishing analysis results from the private repository.
+CodeQL default setup is enabled for Python and Actions, with weekly scanning.
+Dependabot alerts and automated security fixes, private vulnerability reporting,
+secret scanning, and push protection are enabled. These are GitHub settings;
+committing workflow files does not configure them. Report vulnerabilities through
+the [private reporting form](https://github.com/b-luu/ontolog/security/advisories/new).
 
 ## Identity and releases
 
