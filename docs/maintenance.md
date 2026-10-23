@@ -17,8 +17,8 @@ checks have no path filters, so documentation-only pull requests can complete.
 
 ## GitHub configuration
 
-Keep default workflow tokens read-only and disallow Actions from approving pull
-requests. Enable issues, disable the unused wiki, allow merge and squash commits,
+Keep default workflow tokens read-only, require full-SHA action pins, and disallow
+Actions from approving pull requests. Enable issues, disable the unused wiki, allow merge and squash commits,
 disable rebase merging, and delete merged branches automatically. Merge commits
 preserve reviewed atomic commits; squash is useful for noisy contributor branches.
 The [code owner](../.github/CODEOWNERS) reviews external contributions.
@@ -40,9 +40,10 @@ Inspect existing rulesets before running that command again; update the existing
 rule rather than creating duplicates. Verify the required check names against an
 actual successful run. Changing repository visibility is a separate owner action.
 
+Dependabot alerts and automated security fixes are enabled while private.
 After making the repository public, enable GitHub CodeQL default setup for Python
-and Actions, Dependabot alerts/security updates, private vulnerability reporting,
-and secret scanning/push protection where available. Verify each feature's status;
+and Actions, private vulnerability reporting, and secret scanning/push protection
+where available. Verify each feature's status;
 none is implied by committing workflow files. CodeQL and public Scorecard reporting
 are deferred while private rather than requiring unavailable security features or
 publishing analysis results from the private repository.
