@@ -12,4 +12,14 @@ Use [pilot scenarios](docs/pilot-scenarios.md) for behavioral evaluation. Cases 
 
 Editorial preparation belongs in the [release workspace](docs/release/README.md). Keep its current decisions and outstanding work together rather than creating parallel review checklists.
 
+Keep one concern per commit, with messages in the form `type(scope): description`
+(for example, `fix(validation): reject duplicate record IDs`). Use your GitHub
+noreply address for commit authorship. Describe the problem, change, and validation
+in pull requests. Run the checks locally before sending a change; CI repeats them.
+See [repository maintenance](docs/maintenance.md) for workflows and branch rules.
+
+Do not disclose vulnerabilities or company records in public issues. Use GitHub's
+private vulnerability reporting when enabled. Until then, request a private
+reporting channel without including the sensitive details.
+
 Public contributions to this repository are offered under its MIT license. Organizational knowledge created using the kit is not a contribution to this project unless its owner explicitly publishes it here.
