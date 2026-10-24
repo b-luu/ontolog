@@ -48,7 +48,7 @@ An approved decision requires approver IDs and approval evidence, with at least 
 
 ## Type-specific fields
 
-Fields listed here are required unless marked optional. Strings must be nonempty except optional fields; lists may be empty unless noted.
+Fields listed here are required unless marked optional. Optional string fields may be omitted; when present, they must be nonempty. Required strings must also be nonempty, except for the explicitly permitted unsettled metric parameters described below. Lists may be empty unless noted.
 
 ### Domain
 
