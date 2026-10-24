@@ -40,11 +40,15 @@ Contributor `contributor_ids`, `source_ids`, and `scope_ids` may be empty. A dom
 
 `confirmed` means an attributed contributor recognizes the account. It requires `confirmed_by_ids` and `confirmation_source_ids`. Confirmation evidence should identify the explicit read-back response and records covered. It does not approve a business policy. `approved` on a definition requires an approved adoption decision covering that exact record and all its scopes. Approved assertions must be explicitly `stated` or `derived`, rather than an unchecked agent `inferred` claim. Approved records cannot have unresolved `unknowns`.
 
+For an approved concept, assertion, or metric, its effective period must be contained in its adopting decision's period. An omitted `effective_from` or `effective_to` inherits that bound from the decision; if both omit `effective_to`, the period has no end. The resolved period must be nonempty, with an inclusive start and exclusive end. Explicit dates outside the decision period are invalid, even when the periods overlap. Other records' omitted bounds remain unspecified; do not infer approval from them.
+
+Valid time is distinct from `created`/`updated`: an explicit decision may adopt a retroactive period. For example, a decision recorded in October can adopt `[2026-01-01, 2026-07-01)`; its targets may use that period or a narrower one, but cannot apply as approved on July 1. This records current approval of historical validity, not proof that approval was known at the historical date.
+
 An approved decision requires approver IDs and approval evidence, with at least one declared steward of **each** decision scope among its approvers. It records a real human decision; a validator cannot authenticate it. Adding a steward is governance configuration, not something an interviewing agent may do unilaterally. `approved` on a decision indicates authorization of its outcome, which can be `adopt`, `defer`, or `reject`. Only `adopt` authorizes target definitions. `rejected` as a decision status means the proposed decision itself was not authorized.
 
 ## Type-specific fields
 
-Fields listed here are required unless marked optional. Strings must be nonempty except optional fields; lists may be empty unless noted.
+Fields listed here are required unless marked optional. Optional string fields may be omitted; when present, they must be nonempty. Required strings must also be nonempty, except for the explicitly permitted unsettled metric parameters described below. Lists may be empty unless noted.
 
 ### Domain
 

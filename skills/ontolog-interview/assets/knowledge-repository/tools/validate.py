@@ -237,6 +237,14 @@ def validate(root):
                 fail("Approved definition needs an approved adoption decision")
             elif rid not in d["target_ids"] or not set(r["scope_ids"]) <= set(d["scope_ids"]):
                 fail("Adoption decision must cover this record and all its scopes")
+            elif d.get("effective_from"):
+                # Omitted definition bounds inherit the adopting decision's bounds.
+                start = r.get("effective_from", d["effective_from"])
+                end = r.get("effective_to", d.get("effective_to"))
+                if (start < d["effective_from"]
+                        or (d.get("effective_to") and (end is None or end > d["effective_to"]))
+                        or (end is not None and end <= start)):
+                    fail("Adoption decision must cover this record's effective period (exclusive end)")
             if kind == "assertion" and r["evidence_kind"] == "inferred":
                 fail("Unchecked inferred assertion cannot be approved")
             if kind == "metric":
