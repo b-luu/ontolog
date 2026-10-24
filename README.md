@@ -6,6 +6,11 @@ An interview-driven method for building a business ontology, preserving individu
 
 The kit contains a portable [agent skill](skills/ontolog-interview/SKILL.md) and a self-contained [knowledge repository template](skills/ontolog-interview/assets/knowledge-repository/README.md). Both are MIT licensed. There is no API, MCP server, hosted service, or required Obsidian plugin.
 
+For apps that support skill ZIP import, download the tested package from the
+[v0.1.0-alpha.1 prerelease](https://github.com/b-luu/ontolog/releases/tag/v0.1.0-alpha.1).
+See [compatibility evidence](docs/compatibility.md) for tested CLI environments and
+the limits of native-app support.
+
 ## Find what you need
 
 | I want to… | Start here |

@@ -65,7 +65,16 @@ The important distinction is where the agent executes and how it discovers skill
 | Hosted coding environments | Install in that environment, or use supported project skill discovery | Your laptop's home directory is not automatically shared |
 | Other apps | Use their documented import/discovery mechanism | A standard skill folder does not guarantee host support |
 
-To export the complete skill for an app with ZIP import:
+For an app with ZIP import, use a released package or build one locally.
+
+You can download `ontolog-interview.zip` and `SHA256SUMS` from the
+[v0.1.0-alpha.1 prerelease](https://github.com/b-luu/ontolog/releases/tag/v0.1.0-alpha.1)
+without cloning this project or running Python. Verify the download against the
+published checksum with `sha256sum -c SHA256SUMS --ignore-missing` from the download
+directory. A verified archive still needs the app's supported import interface;
+native-app imports have not been exercised in our compatibility probe.
+
+To build it yourself from a checkout:
 
 ```sh
 python3 ontolog.py export-skill
@@ -89,7 +98,7 @@ Continue with [domain setup](../skills/ontolog-interview/assets/knowledge-reposi
 
 Keep your company instance independently versioned. Review template/schema updates as migrations rather than ejecting over existing records. For skill updates, inspect the new package and intentionally replace or back up your prior installation; there is no destructive force-install switch.
 
-These scripts have automated filesystem/packaging checks. They have not been tested by importing into each vendor app. A clean public source bundle is assumed: checks reject populated template records and symlinks, but cannot identify confidential prose someone manually inserted elsewhere in a skill.
+These scripts have automated filesystem/packaging checks. Project-scoped invocation was exercised in Codex CLI 0.163.0 and Claude Code 2.1.309; native-app imports remain untested. See the [compatibility evidence](compatibility.md) for commands, limits, and the app-import checklist. A clean public source bundle is assumed: checks reject populated template records and symlinks, but cannot identify confidential prose someone manually inserted elsewhere in a skill.
 
 Vendor instructions checked 2026-10-19:
 

@@ -4,6 +4,8 @@
 
 These are manual agent evaluations, not claims of tested interview performance. Use disposable repositories and synthetic contributors. Review observable decisions, not exact wording. Structural unit tests do not establish the agent's fidelity or interviewing quality.
 
+The [2026-10-24 synthetic evaluation](pilot-results-2026-10-24.md) records the first observed agent sessions and their limits. It does not replace a real organizational pilot.
+
 ## Independent accounts
 
 Contributor A: “Active means logged in in the last 30 days.” Contributor B: “Active means paid during the calendar month.” Have different agent sessions capture each account before sharing the other definition.
