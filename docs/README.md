@@ -11,6 +11,8 @@
 
 ## Explore the repository format
 
+For tested environments and remaining app-import checks, see [compatibility evidence](compatibility.md).
+
 The [template guide](../skills/ontolog-interview/assets/knowledge-repository/README.md) is also the README of every ejected repository. Its [record model](../skills/ontolog-interview/assets/knowledge-repository/docs/model.md), [record templates](../skills/ontolog-interview/assets/knowledge-repository/templates/README.md), and [scope boundaries](../skills/ontolog-interview/assets/knowledge-repository/docs/boundaries.md) travel with that repository.
 
 Use the [fictional subscription-business example](../skills/ontolog-interview/assets/knowledge-repository/examples/subscription-business/README.md) to see two different definitions and a scoped approval. Examples are opt-in when ejecting.

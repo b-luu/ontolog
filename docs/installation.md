@@ -89,7 +89,7 @@ Continue with [domain setup](../skills/ontolog-interview/assets/knowledge-reposi
 
 Keep your company instance independently versioned. Review template/schema updates as migrations rather than ejecting over existing records. For skill updates, inspect the new package and intentionally replace or back up your prior installation; there is no destructive force-install switch.
 
-These scripts have automated filesystem/packaging checks. They have not been tested by importing into each vendor app. A clean public source bundle is assumed: checks reject populated template records and symlinks, but cannot identify confidential prose someone manually inserted elsewhere in a skill.
+These scripts have automated filesystem/packaging checks. Project-scoped invocation was exercised in Codex CLI 0.163.0 and Claude Code 2.1.309; native-app imports remain untested. See the [compatibility evidence](compatibility.md) for commands, limits, and the app-import checklist. A clean public source bundle is assumed: checks reject populated template records and symlinks, but cannot identify confidential prose someone manually inserted elsewhere in a skill.
 
 Vendor instructions checked 2026-10-19:
 
