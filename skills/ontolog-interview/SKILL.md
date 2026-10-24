@@ -3,7 +3,7 @@ name: ontolog-interview
 description: Interview business contributors to build or extend a domain knowledge repository with attributed concepts, relationships, KPI definitions, and scoped alignment proposals. Use for business knowledge elicitation, ontology mapping, metric clarification, and reconciling contributors' perspectives.
 license: MIT
 metadata:
-  version: "0.1.0"
+  version: "0.1.0-alpha.1"
 ---
 
 # Business domain interview
