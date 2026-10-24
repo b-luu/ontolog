@@ -75,6 +75,73 @@ class RepositoryTests(unittest.TestCase):
         self.change("metric-finance-active", scope_ids=["domain-finance", "domain-product"])
         self.assert_invalid("all its scopes")
 
+    def approve_with_period(self, kind, **period):
+        """Adopt each definition type with a bounded, explicitly retroactive decision."""
+        self.change("assertion-active-close-match", status="proposed")
+        rid = {"concept": "concept-finance-active", "assertion": "assertion-active-close-match",
+               "metric": "metric-finance-active"}[kind]
+        self.change("decision-finance-active", effective_from="2026-01-01",
+                    effective_to="2026-07-01",
+                    target_ids=["concept-finance-active", "metric-finance-active", rid]
+                    if kind == "assertion" else ["concept-finance-active", "metric-finance-active"])
+        for target in ("concept-finance-active", "metric-finance-active"):
+            self.change(target, effective_from="2026-01-01", effective_to="2026-07-01")
+        updates = dict(status="approved", decision_id="decision-finance-active", **period)
+        if kind == "assertion":
+            updates.update(scope_ids=["domain-finance"], evidence_kind="stated", unknowns=[])
+        self.change(rid, **updates)
+        return rid
+
+    def test_approval_period_must_cover_each_definition_type(self):
+        for kind in ("concept", "assertion", "metric"):
+            for period in ({"effective_from": "2025-12-31", "effective_to": "2026-02-01"},
+                           {"effective_from": "2026-06-01", "effective_to": "2026-07-02"},
+                           {"effective_from": "2026-07-01", "effective_to": "2026-08-01"},
+                           {"effective_from": "2026-08-01", "effective_to": "2026-09-01"}):
+                with self.subTest(kind=kind, period=period):
+                    self.approve_with_period(kind, **period)
+                    self.assert_invalid("Adoption decision must cover this record's effective period")
+
+    def test_contained_and_retroactive_approval_periods_are_valid(self):
+        for kind in ("concept", "assertion", "metric"):
+            for period in ({"effective_from": "2026-01-01", "effective_to": "2026-07-01"},
+                           {"effective_from": "2026-02-01", "effective_to": "2026-06-01"}):
+                with self.subTest(kind=kind, period=period):
+                    self.approve_with_period(kind, **period)
+                    self.assertEqual(self.errors(), [])
+
+    def test_omitted_approved_bounds_inherit_decision_period(self):
+        for kind in ("concept", "assertion", "metric"):
+            for omitted in (("effective_from",), ("effective_to",),
+                            ("effective_from", "effective_to")):
+                with self.subTest(kind=kind, omitted=omitted):
+                    rid = self.approve_with_period(kind, effective_from="2026-02-01",
+                                                   effective_to="2026-06-01")
+                    path = self.root / "records" / f"{rid}.md"
+                    r = validator.parse_record(path)
+                    for field in omitted:
+                        del r[field]
+                    body = path.read_text().split("\n---\n", 1)[1]
+                    path.write_text("---\n" + yaml.safe_dump(r, sort_keys=False) + "---\n" + body)
+                    self.assertEqual(self.errors(), [])
+
+    def test_inherited_approval_bounds_cannot_make_an_empty_period(self):
+        for period, omitted in (({"effective_from": "2026-07-01"}, "effective_to"),
+                                ({"effective_to": "2026-01-01"}, "effective_from")):
+            with self.subTest(period=period):
+                rid = self.approve_with_period("concept", **period)
+                path = self.root / "records" / f"{rid}.md"
+                r = validator.parse_record(path)
+                r.pop(omitted, None)
+                body = path.read_text().split("\n---\n", 1)[1]
+                path.write_text("---\n" + yaml.safe_dump(r, sort_keys=False) + "---\n" + body)
+                self.assert_invalid("Adoption decision must cover this record's effective period")
+
+    def test_approval_with_no_end_allows_later_periods(self):
+        self.change("concept-finance-active", effective_from="2030-01-01",
+                    effective_to="2031-01-01")
+        self.assertEqual(self.errors(), [])
+
     def test_cross_scope_decision_needs_a_steward_for_each_scope(self):
         self.change("decision-finance-active", scope_ids=["domain-finance", "domain-product"])
         self.assert_invalid("No configured steward approved decision scope domain-product")

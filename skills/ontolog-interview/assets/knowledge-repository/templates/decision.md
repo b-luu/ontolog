@@ -25,7 +25,7 @@ target_ids: []
 
 ## Decision
 
-REPLACE with the exact outcome, target IDs, scopes, and effective date.
+REPLACE with the exact outcome, target IDs, scopes, and effective period. Add quoted `effective_from` metadata before approval and `effective_to` when approval has an exclusive end. Approved targets must fit within this period; their omitted bounds inherit the decision bounds. Explicit retroactive periods are allowed.
 
 ## Alternatives and rationale
 
