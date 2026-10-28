@@ -10,7 +10,7 @@ Before proposing a change, run the [development checks](README.md#development-ch
 
 Use [pilot scenarios](docs/pilot-scenarios.md) for behavioral evaluation. Cases should examine fidelity, missing information, scope, attribution, disagreement, and authority rather than exact phrasing. A useful case includes two plausible but different definitions and enough evidence to determine whether the agent should map, specialize, or dispute them.
 
-Editorial preparation belongs in the [release workspace](docs/release/README.md). Keep its current decisions and outstanding work together rather than creating parallel review checklists.
+Keep unpublished articles, social drafts, and editorial decisions outside this public repository.
 
 Keep one concern per commit, with messages in the form `type(scope): description`
 (for example, `fix(validation): reject duplicate record IDs`). Use your GitHub

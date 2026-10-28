@@ -32,4 +32,4 @@ Use the [fictional subscription-business example](../skills/ontolog-interview/as
 
 Read [contributing](../CONTRIBUTING.md) for change and validation expectations, and [pilot scenarios](pilot-scenarios.md) for behavioral evaluation. The [skill entry point](../skills/ontolog-interview/SKILL.md) is the maintained instruction set installed in agents.
 
-The [release workspace](release/README.md) is for maintainers editing the blog and social copy. It records the current draft status and unresolved editorial decisions; it is not required reading to use Ontolog.
+Unpublished articles and social drafts are maintained separately from this public repository.

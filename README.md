@@ -95,4 +95,4 @@ The validator checks record structure, references, and minimum review evidence. 
 
 After a pilot: improve the method from observed failures, introduce search/indexes as needed, then expose the same IDs and proposal/review operations through an API and MCP. Database adoption should preserve attribution, scoped definitions, and decision history.
 
-For maintainers preparing publication, the [release workspace](docs/release/README.md) contains the article, social drafts, and remaining editorial decisions. These are unpublished drafts, separate from the user guides.
+Unpublished articles and social drafts are maintained separately from this public repository.
