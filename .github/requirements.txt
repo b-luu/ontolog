@@ -1,0 +1,4 @@
+# CI wheels: CPython 3.10 and 3.14 on Linux x86_64. Refresh: docs/maintenance.md.
+PyYAML==6.0.3 \
+    --hash=sha256:9c7708761fccb9397fe64bbc0395abcae8c4bf7b0eac081e12b809bf47700d0b \
+    --hash=sha256:c458b6d084f9b935061bc36216e8a69a7e293a2f1e68bf956dcd9e6cbcd143f5
