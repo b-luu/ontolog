@@ -2,6 +2,7 @@
 
 import importlib.util
 from pathlib import Path
+import random
 import shutil
 import subprocess
 import sys
@@ -186,6 +187,31 @@ class RepositoryTests(unittest.TestCase):
             with self.subTest(value=value):
                 self.change("concept-product-active", status=value, source_ids=value)
                 self.assertTrue(self.errors())
+
+    def test_deep_yaml_is_reported_by_cli_without_traceback(self):
+        path = self.root / "records/deep.md"
+        path.write_text("---\nx_deep: " + "[" * 600 + "0" + "]" * 600 + "\n---\nEvidence\n")
+        result = subprocess.run(
+            [sys.executable, str(TEMPLATE / "tools/validate.py"), str(self.root)],
+            capture_output=True, text=True, timeout=10,
+        )
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("deep.md: YAML nesting exceeds", result.stderr)
+        self.assertIn("Validation failed:", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+
+    def test_bounded_malformed_metadata_smoke(self):
+        rng = random.Random(20261028)
+        samples = ["[]", "type: concept\ntype: metric", "type: *missing", "[unclosed"]
+        samples.extend("type: " + "".join(rng.choices("[]{}:&*!?abc012\n", k=64))
+                       for _ in range(32))
+        path = self.root / "records/malformed.md"
+        for metadata in samples:
+            with self.subTest(metadata=metadata):
+                path.write_text("---\n" + metadata + "\n---\nSynthetic evidence\n")
+                self.assertTrue(self.errors())
+        path.write_text("---\ntype: concept\nSynthetic evidence without closing delimiter\n")
+        self.assert_invalid("Missing YAML front matter")
 
     def test_typo_is_not_silently_accepted_as_extension(self):
         self.change("concept-product-active", decison_id="decision-finance-active")

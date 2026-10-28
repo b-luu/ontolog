@@ -98,7 +98,10 @@ def parse_record(path):
     match = re.match(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|$)(.*)\Z", text, re.S)
     if not match:
         raise ValueError("Missing YAML front matter")
-    record = yaml.load(match.group(1), Loader=UniqueLoader)
+    try:
+        record = yaml.load(match.group(1), Loader=UniqueLoader)
+    except RecursionError as exc:
+        raise ValueError("YAML nesting exceeds the parser's supported depth") from exc
     if not isinstance(record, dict):
         raise ValueError("Front matter must be a mapping")
     if not match.group(2).strip():
