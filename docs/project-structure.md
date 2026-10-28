@@ -11,7 +11,6 @@ Human discoverability matters: people need to inspect the schema and examples be
 ```text
 README.md                            project entry point
 docs/                                user guides and design explanations
-  release/                           unpublished article and social drafts
 skills/ontolog-interview/
   SKILL.md                           agent instructions
   references/                        interview, metric, and alignment methods
